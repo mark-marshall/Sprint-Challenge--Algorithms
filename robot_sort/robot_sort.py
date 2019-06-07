@@ -93,6 +93,9 @@ class SortingRobot:
         return self._light == "ON"
 
     def sort_first_run(self):
+        """
+        Do initial sort run from left to right
+        """
         # set light off as indicator of whether list is sorted
         self.set_light_off()
         
@@ -119,6 +122,9 @@ class SortingRobot:
                 self.move_right()
     
     def sort_from_left(self):
+        """
+        Do sort run from left to right
+        """
         # reset light at the start of every l-r rotation
         self.set_light_off()
         # move right twice as the previous sort_from_right has placed items
@@ -148,6 +154,9 @@ class SortingRobot:
                 self.move_right()
     
     def sort_from_right(self):
+        """
+        Do sort run from right to left
+        """
         # reset light at the start of every r-l rotation
         self.set_light_off()
         # move left twice as the previous sort_from_left has placed items
@@ -178,11 +187,11 @@ class SortingRobot:
                 
     def sort(self):
         """
-        Sort the robot's list.
+        Sort the robot's list
         """
         # initial run from left - unoptimised
         self.sort_first_run()
-        # alternate buble sort runs from right and left
+        # alternate bubble sort runs from right and left
         while self.light_is_on():
             self.sort_from_right()
             # check to see if list is fully sorted after sort_from_right
