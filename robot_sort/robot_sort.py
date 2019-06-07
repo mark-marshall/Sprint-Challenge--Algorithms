@@ -91,13 +91,69 @@ class SortingRobot:
         Returns True if the robot's light is on and False otherwise.
         """
         return self._light == "ON"
+    
+    def sort_from_left(self):
+        # reset light at the start of every l-r rotation
+        self.set_light_off()
+        
+        while self.can_move_right():
+            # pick up the item in front of robot
+            self.swap_item()
+            # move right for comparison cycle
+            self.move_right()
 
+            # if the item in front is smaller
+            if self.compare_item() == 1:
+                # swap the held item and put it back in pos -1
+                self.swap_item()
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+                # set light on to indicate the list is not fully sorted
+                self.set_light_on()
+            
+            else:
+                # put the picked up item back down in its original pos
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+    
+    def sort_from_right(self):
+        # reset light at the start of every r-l rotation
+        self.set_light_off()
+        
+        while self.can_move_left():
+            # pick up the item in front of robot
+            self.swap_item()
+            # move left for comparison cycle
+            self.move_left()
+
+            # if the item in front is larger
+            if self.compare_item() == -1:
+                # swap the held item and put it back in pos +1
+                self.swap_item()
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+                # set light on to indicate the list is not fully sorted
+                self.set_light_on()
+            
+            else:
+                # put the picked up item back down in its original pos
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+            
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        # set light on to indicate sorting in progress
+        self.set_light_on()
+        while self.light_is_on():
+            self.sort_from_left()
+            self.sort_from_right()
+        
 
 
 if __name__ == "__main__":
