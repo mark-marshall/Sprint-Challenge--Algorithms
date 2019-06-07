@@ -91,10 +91,39 @@ class SortingRobot:
         Returns True if the robot's light is on and False otherwise.
         """
         return self._light == "ON"
+
+    def sort_first_run(self):
+        # set light off as indicator of whether list is sorted
+        self.set_light_off()
+        
+        while self.can_move_right():
+            # pick up the item in front of robot
+            self.swap_item()
+            # move right for comparison cycle
+            self.move_right()
+
+            # if the item in front is smaller
+            if self.compare_item() == 1:
+                # swap the held item and put it back in pos -1
+                self.swap_item()
+                self.move_left()
+                self.swap_item()
+                self.move_right()
+                # set light on to indicate the list is not fully sorted
+                self.set_light_on()
+            
+            else:
+                # put the picked up item back down in its original pos
+                self.move_left()
+                self.swap_item()
+                self.move_right()
     
     def sort_from_left(self):
         # reset light at the start of every l-r rotation
         self.set_light_off()
+        # move right twice as the previous sort_from_right has placed items
+        self.move_right()
+        self.move_right()
         
         while self.can_move_right():
             # pick up the item in front of robot
@@ -121,6 +150,9 @@ class SortingRobot:
     def sort_from_right(self):
         # reset light at the start of every r-l rotation
         self.set_light_off()
+        # move left twice as the previous sort_from_left has placed items
+        self.move_left()
+        self.move_left()
         
         while self.can_move_left():
             # pick up the item in front of robot
@@ -143,16 +175,17 @@ class SortingRobot:
                 self.move_right()
                 self.swap_item()
                 self.move_left()
-            
+                
     def sort(self):
         """
         Sort the robot's list.
         """
-        # set light on to indicate sorting in progress
-        self.set_light_on()
+        # initial run from left - unoptimised
+        self.sort_first_run()
+        # alternate buble sort runs from right and left
         while self.light_is_on():
-            self.sort_from_left()
             self.sort_from_right()
+            self.sort_from_left()
         
 
 
