@@ -185,7 +185,9 @@ class SortingRobot:
         # alternate buble sort runs from right and left
         while self.light_is_on():
             self.sort_from_right()
-            self.sort_from_left()
+            # check to see if list is fully sorted after sort_from_right
+            if self.light_is_on():
+                self.sort_from_left()
         
 
 
