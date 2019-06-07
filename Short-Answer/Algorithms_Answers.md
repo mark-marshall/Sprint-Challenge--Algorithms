@@ -41,3 +41,18 @@ Calcs:
 O(1 + 1 + 1) + O(n)
 ### O(n)
 
+## Exercise II
+
+Initialize a "low" value as 0                       O(1)
+Initialize a "high" value as the total floors       O(1)
+
+While tested floor is not equal to the target       O(log(n)) -> at worst, runs for half n
+    Initialize "middle" as ("high" + "low") // 2    O(1)
+    If it breaks, set "high" as "middle"            O(1) -> will only do one of the if/elif ops
+    Elif it doesn't break, set "low" as "middle"    
+
+Return the answer once the loop is broken           O(1)
+
+Calcs:
+O(1 + 1) + O(log(n) * 1 + 1) + O(1)
+### O(log(n)) -> binary search function
